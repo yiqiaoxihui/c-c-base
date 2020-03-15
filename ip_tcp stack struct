@@ -1,0 +1,95 @@
+
+typedef unsigned int bpf_u_int32;
+typedef int bpf_int32;
+//typedef long bpf_int32;
+
+
+//typedef unsigned long bpf_u_int32;
+typedef unsigned short  u_short;
+typedef unsigned long u_int32;
+typedef unsigned short u_int16;
+typedef unsigned char u_int8;
+typedef unsigned char u_char;
+
+typedef unsigned int gunichar;
+typedef unsigned short gunichar2;		//glib gunicode.h
+typedef unsigned char guchar;
+typedef char gchar;
+typedef unsigned char guint8;
+typedef char gint8;
+
+typedef unsigned short  gushort;
+typedef  short gshort;
+typedef unsigned short  guint16;
+typedef  short gint16;
+
+typedef int gint;
+typedef unsigned int guint;
+typedef unsigned int guint32;
+typedef int gint32;
+
+typedef unsigned  long  gulong;
+typedef long  glong;
+typedef unsigned long long  guint64;
+typedef long long gint64;
+
+typedef bool gboolean;
+
+
+//	包头结构，16字节
+struct pcap_pkthdr {
+	struct timeval ts;	/* time stamp */
+	bpf_u_int32 caplen;	/* length of portion present */
+	bpf_u_int32 len;	/* length this packet (off wire) */
+};
+
+#define IP_HEAD_LEN 20 /*定义IP头部长度*/
+#define IPv6_HEAD_LEN 40 //IPv6
+//	IP头部结构体,ipv4的total_len包含自身长度
+typedef struct _ipv4_header
+{ //IP数据报头
+	u_int8 version_header_len;       //版本+报头长度
+	u_int8 tos;            //服务类型
+	u_int16 total_len;       //总长度
+	u_int16 id; //标识
+	u_int16 flag_segment;   //标志+片偏移
+	u_int8 ttl;            //生存周期
+	u_int8 protocol;       //协议类型
+	u_int16 checksum;       //头部校验和
+	u_int32 src_ip; //源IP地址
+	u_int32 dst_ip; //目的IP地址
+} _ipv4_header;
+//ipv6长度，不包含自身长度
+typedef struct _ipv6_header
+{
+	u_int32  ip6_ver_tos;     /* 32 */
+	u_int16 payload_len;     /* payload length */
+	u_int8  ip6_nxt;     /* next header */
+	u_int8  ip6_hop;     /* hop limit */
+	u_int8 ip6_src[16];     /* source address */
+	u_int8 ip6_dst[16];     /* destination address */
+} _ipv6_header;
+
+// UDP 头部结构体
+typedef struct _udp_header
+{
+	u_int16 src_port;
+	u_int16 dst_port;
+	u_int16 len;
+	u_int16 checksum;
+}_udp_header;
+
+// TCP 头部结构体
+typedef struct _tcp_header
+{
+	u_int16 src_port;
+	u_int16 dst_port;
+	u_int seq;
+	u_int ack;
+	u_int8 len_left:4;
+	u_int8 flag_right:4;
+	u_int8 flags;
+	u_int16 window_size;
+	u_int16 checksum;
+	u_int16 urgent_pointer;
+}_tcp_header;
