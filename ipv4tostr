@@ -1,0 +1,8 @@
+#include <WS2tcpip.h>
+
+void ipv6_network_to_str(u_int8 ipv6[],char ipv6_str[])
+{
+	in6_addr* m_pInAddr = (in6_addr*)new u_int8[sizeof(in6_addr)];
+	memcpy(m_pInAddr, ipv6, sizeof(in6_addr));
+	inet_ntop(AF_INET6, m_pInAddr, ipv6_str, 40);
+}
